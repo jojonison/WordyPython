@@ -1,0 +1,59 @@
+module common {
+    struct TopPlayers {
+        string username;
+        long rank;
+        long numberOfWins;
+    };
+
+    struct TopWords {
+        string theWord;
+        string username;
+        long rank;
+    };
+
+    typedef sequence<TopPlayers> TopFivePlayersSequence;
+    typedef sequence<TopWords> TopFiveWordsSequence;
+
+    exception WordIsInvalid {
+        string exceptionMessage;
+    };
+
+    exception RanOutOfTime {
+        string exceptionMessage;
+    };
+
+    exception NoOtherPlayersJoined {
+        string exceptionMessage;
+    };
+
+    exception LogInException {
+        string exceptionMessage;
+    };
+
+    interface GameFunctions {
+        void logIn(in string username, in string password)
+        raises(LogInException);
+
+        void logOut(in string username);
+
+        long playGame(in string username)
+        raises(NoOtherPlayersJoined);
+
+        string bringItOn(in string username);
+
+        long getTimer(in string username);
+
+        string whoWonTheRound(in string username);
+
+        string whoWonTheGame(in string username);
+
+        void sendAWord(in string username, in string word)
+        raises(WordIsInvalid, RanOutOfTime);
+
+        string getTheSeventeenLetters(in string username);
+
+        TopFivePlayersSequence getTopFivePlayers();
+
+        TopFiveWordsSequence getTopFiveLongestWords();
+    };
+};
